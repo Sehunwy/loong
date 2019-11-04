@@ -1,0 +1,27 @@
+.pr10 {
+  padding-right: 10px;
+}
+
+.pl10 {
+  padding-left: 10px;
+}
+
+.mr30 {
+  margin-right: 30px;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.fs13 {
+  font-size: 13px;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.mt15 {
+  margin-top: 15px;
+}
