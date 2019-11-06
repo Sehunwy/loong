@@ -1,8 +1,10 @@
 <template>
   <div class="tab">
-    <span class="dib tab-active-bar" ref="activeBar"></span>
-    <span v-for="(item,index) in tabArr" class="dib pr10 pl10 mr30 fs13 cursor tab-nav"
-          :class="currentView == item.component ? 'active-tab' : ''" @click="tabChange(item.component,index,item.text)">{{item.text}}</span>
+    <div style="min-width: 970px">
+      <span class="dib tab-active-bar" ref="activeBar"></span>
+      <span v-for="(item,index) in tabArr" class="dib pr10 pl10 mr30 fs13 cursor tab-nav"
+            :class="currentView == item.component ? 'active-tab' : ''" @click="tabChange(item.component,index,item.text)">{{item.text}}</span>
+    </div>
   </div>
 </template>
 
@@ -54,10 +56,11 @@
     width: 100%;
     border-bottom: 1px solid #ced4da;
     position: relative;
-    font-size: 0
+    font-size: 0;
+    overflow: hidden;
   }
 
-  .tab > .tab-nav {
+  .tab-nav {
     text-align: center;
     padding-bottom: 10px;
     padding-top: 15px;

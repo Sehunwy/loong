@@ -1,21 +1,65 @@
+.pr5 {
+  padding-right: 5px;
+}
+
 .pr10 {
   padding-right: 10px;
+}
+
+.pr20 {
+  padding-right: 20px;
+}
+
+.pr22 {
+  padding-right: 22px
 }
 
 .pl10 {
   padding-left: 10px;
 }
 
+.pl20 {
+  padding-left: 20px;
+}
+
+.pt5 {
+  padding-top: 5px;
+}
+
+.pt10 {
+  padding-top: 10px;
+}
+
+.pt20 {
+  padding-top: 20px;
+}
+
 .mr30 {
   margin-right: 30px;
+}
+
+.mb15 {
+  margin-bottom: 15px;
 }
 
 .dib {
   display: inline-block;
 }
 
+.fs14 {
+  font-size: 14px;
+}
+
 .fs13 {
   font-size: 13px;
+}
+
+.fs12 {
+  font-size: 12px;
+}
+
+.fs16 {
+  font-size: 16px;
 }
 
 .cursor {
@@ -24,4 +68,87 @@
 
 .mt15 {
   margin-top: 15px;
+}
+
+.ellip {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.color-1188dd {
+  color: #1188dd;
+}
+
+.color-28C4EF {
+  color: #28C4EF;
+}
+
+.color-4884FD {
+  color: #4884FD;
+}
+
+.back-white {
+  background: #ffffff;
+}
+
+.back-red {
+  background: #FF2222;
+}
+
+.back-orange {
+  background: #F5A014;
+}
+
+.back-yellow {
+  background: #F6E81F;
+}
+
+.back-1188dd {
+  background: #1188dd;
+}
+
+.back-28C4EF {
+  background: #28C4EF;
+}
+
+.back-4884FD {
+  background: #4884FD;
+}
+
+.c3 {
+  color: #333333;
+}
+
+.c6 {
+  color: #666666;
+}
+
+.c9 {
+  color: #999999;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-cneter {
+  text-align: center;
+}
+
+.border-bottom-E9ECEF {
+  border-bottom: 1px solid #E9ECEF;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between
 }

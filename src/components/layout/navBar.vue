@@ -10,12 +10,35 @@
         </div>
       </li>
       <li class="topbar-nav">
-        <div class="topbar-nav-icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-gaojing"></use>
-          </svg>
+        <div @mouseenter="enter('alarm')" @mouseleave="leave('alarm')">
+          <div class="topbar-nav-icon">
+            <div class="warn-total">2</div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-gaojing"></use>
+            </svg>
+          </div>
+          <div class="hover-alarm hover-common" ref="alarm">
+            <div class="warn-list">
+              <div class="warn-list-item">
+                <div class="ellip warn-text">
+                  ip为13.10.47.3的服务器有磁盘损坏，请及时处理
+                </div>
+                <div class="warn-time">
+                  2019-11-01 16:09:49
+                </div>
+              </div>
+              <div class="warn-list-item">
+                <div class="ellip warn-text">
+                  ip为13.10.47.3的服务器有磁盘损坏，请及时处理
+                </div>
+                <div class="warn-time">
+                  2019-11-01 16:09:49
+                </div>
+              </div>
+            </div>
+            <div class="more-warn-btn">查看更多</div>
+          </div>
         </div>
-        <div class="hover-alarm">test告警</div>
       </li>
       <li class="topbar-nav" title="日志管理">
         <div class="topbar-nav-icon">
@@ -32,10 +55,23 @@
         </div>
       </li>
       <li class="topbar-nav topbar-nav-last">
-        <div class="topbar-nav-icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-nv"></use>
-          </svg>
+        <div @mouseenter="enter('person')" @mouseleave="leave('person')">
+          <div class="topbar-nav-icon">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-nv"></use>
+            </svg>
+          </div>
+          <div class="person-info hover-common" ref="person">
+            <div class="login-type">
+              admin
+            </div>
+            <div class="account-operation">
+              账号设置
+            </div>
+            <div class="account-operation log-out">
+              注销登录
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -67,6 +103,12 @@
                 if (item[item.length - 1].meta.title != undefined) {
                     this.breadcrumb = this.breadcrumb + item[item.length - 1].meta.title;
                 }
+            },
+            enter: function (even) {
+                this.$refs[`${even}`].style.display = 'block';
+            },
+            leave: function (even) {
+                this.$refs[`${even}`].style.display = 'none';
             }
         },
         created() {
@@ -83,6 +125,7 @@
 <style scoped>
   .loong-nav {
     width: 100%;
+    /*min-width: 970px;*/
     height: 54px;
     background-color: #F8F9FA;
   }
@@ -124,14 +167,82 @@
     background-color: #F2F4F6;
   }
 
-  .hover-alarm {
+  .hover-common {
     position: absolute;
+    z-index: 1;
     font-size: 14px;
     color: #333333;
-    right: 0;
-    width: 260px;
+    right: 0px;
+    top: 53px;
     background-color: #fff;
     box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.19);
-    /*display: none;*/
+    display: none;
+  }
+
+  .hover-alarm {
+    width: 260px;
+  }
+
+  .warn-total {
+    position: absolute;
+    left: 29px;
+    top: 14px;
+    padding: 0 4px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    background-color: #FF2222;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  .warn-list {
+    border-bottom: 1px solid #E9ECEF;
+  }
+
+  .warn-list-item {
+    padding: 10px 20px;
+  }
+
+  .warn-text {
+    font-size: 12px;
+    color: #333333;
+  }
+
+  .warn-time {
+    font-size: 12px;
+    color: #999999
+  }
+
+  .more-warn-btn {
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 12px;
+    color: #1188DD;
+  }
+
+  .person-info {
+    width: 120px;
+  }
+
+  .login-type {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #E9ECEF;
+    font-size: 13px
+  }
+
+  .account-operation {
+    height: 36px;
+    line-height: 36px;
+    padding-left: 20px;
+    overflow: hidden;
+    font-size: 12px
+  }
+
+  .log-out {
+    color: #ff2222;
   }
 </style>
