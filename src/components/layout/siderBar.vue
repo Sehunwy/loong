@@ -59,7 +59,7 @@
             },
             setMenus: function (data, isRoot, parentId) {
                 for (let item of data) {
-                    if (item.path != '*' && item.meta != undefined) {
+                    if (item.path != '*' && item.meta != undefined && item.meta.isMenus) {
                         if (isRoot == undefined) {
                             isRoot = true
                         }

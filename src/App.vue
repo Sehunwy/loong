@@ -39,4 +39,9 @@
   ul,li,ol {
     list-style: none;
   }
+
+  p,ul,li,ol {
+    margin: 0px;
+    padding: 0px;
+  }
 </style>

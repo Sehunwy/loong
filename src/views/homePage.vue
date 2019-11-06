@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <tab :tabArr="tabArr" @currentCom="getCurrentCom" style="min-width: 970px"></tab>
+    <tab :tabArr="tabArr" @currentCom="getCurrentCom"></tab>
     <div class="mt15 showView">
       <div :is="currentView"></div>
     </div>
