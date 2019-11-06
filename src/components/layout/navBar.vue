@@ -1,80 +1,84 @@
 <template>
-  <div class="loong-nav">
-    <span class="breadcrumb-container">{{breadcrumb}}</span>
-    <ul class="topbar-nav-list">
-      <li class="topbar-nav" title="任务管理">
-        <div class="topbar-nav-icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-renwuguanli"></use>
-          </svg>
-        </div>
-      </li>
-      <li class="topbar-nav">
-        <div @mouseenter="enter('alarm')" @mouseleave="leave('alarm')">
-          <div class="topbar-nav-icon">
-            <div class="warn-total">2</div>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-gaojing"></use>
-            </svg>
-          </div>
-          <div class="hover-alarm hover-common" ref="alarm">
-            <div class="warn-list">
-              <div class="warn-list-item">
-                <div class="ellip warn-text">
-                  ip为13.10.47.3的服务器有磁盘损坏，请及时处理
-                </div>
-                <div class="warn-time">
-                  2019-11-01 16:09:49
-                </div>
-              </div>
-              <div class="warn-list-item">
-                <div class="ellip warn-text">
-                  ip为13.10.47.3的服务器有磁盘损坏，请及时处理
-                </div>
-                <div class="warn-time">
-                  2019-11-01 16:09:49
-                </div>
-              </div>
-            </div>
-            <div class="more-warn-btn">查看更多</div>
-          </div>
-        </div>
-      </li>
-      <li class="topbar-nav" title="日志管理">
-        <div class="topbar-nav-icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-rizhi"></use>
-          </svg>
-        </div>
-      </li>
-      <li class="topbar-nav" title="授权信息">
-        <div class="topbar-nav-icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-shouquanxinxi"></use>
-          </svg>
-        </div>
-      </li>
-      <li class="topbar-nav topbar-nav-last">
-        <div @mouseenter="enter('person')" @mouseleave="leave('person')">
+  <div style="overflow-x: hidden;min-width: 600px">
+    <div class="loong-nav">
+      <span class="breadcrumb-container">{{breadcrumb}}</span>
+      <ul class="topbar-nav-list">
+        <li class="topbar-nav" title="任务管理">
           <div class="topbar-nav-icon">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-nv"></use>
+              <use xlink:href="#icon-renwuguanli"></use>
             </svg>
           </div>
-          <div class="person-info hover-common" ref="person">
-            <div class="login-type">
-              admin
+        </li>
+        <li class="topbar-nav">
+          <div @mouseenter="enter('alarm')" @mouseleave="leave('alarm')">
+            <div class="topbar-nav-icon">
+              <div class="warn-total">2</div>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-gaojing"></use>
+              </svg>
             </div>
-            <div class="account-operation">
-              账号设置
-            </div>
-            <div class="account-operation log-out">
-              注销登录
+            <div class="hover-alarm hover-common" ref="alarm">
+              <div class="warn-list">
+                <div class="warn-list-item">
+                  <div class="ellip warn-text">
+                    ip为13.10.47.3的服务器有磁盘损坏，请及时处理
+                  </div>
+                  <div class="warn-time">
+                    2019-11-01 16:09:49
+                  </div>
+                </div>
+                <div class="warn-list-item">
+                  <div class="ellip warn-text">
+                    ip为13.10.47.3的服务器有磁盘损坏，请及时处理
+                  </div>
+                  <div class="warn-time">
+                    2019-11-01 16:09:49
+                  </div>
+                </div>
+              </div>
+              <div class="more-warn-btn" @click="goPath('alarm1',{query:'query'})">查看更多</div>
             </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+        <li class="topbar-nav" title="日志管理">
+          <div class="topbar-nav-icon">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-rizhi"></use>
+            </svg>
+          </div>
+        </li>
+        <li class="topbar-nav" title="授权信息">
+          <div class="topbar-nav-icon">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-shouquanxinxi"></use>
+            </svg>
+          </div>
+        </li>
+        <li class="topbar-nav topbar-nav-last">
+          <div @mouseenter="enter('person')" @mouseleave="leave('person')">
+            <div class="topbar-nav-icon">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-nv"></use>
+              </svg>
+            </div>
+            <div style="height: 1000px">
+            </div>
+            <div class="person-info hover-common" ref="person">
+              <div class="login-type">
+                admin
+              </div>
+              <div class="account-operation">
+                账号设置
+              </div>
+              <div class="account-operation log-out">
+                注销登录
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -125,7 +129,6 @@
 <style scoped>
   .loong-nav {
     width: 100%;
-    /*min-width: 970px;*/
     height: 54px;
     background-color: #F8F9FA;
   }
@@ -145,7 +148,6 @@
   .topbar-nav {
     position: relative;
     float: left;
-
     font-size: 24px;
     color: #999999;
     cursor: pointer;
@@ -169,11 +171,13 @@
 
   .hover-common {
     position: absolute;
+    /*position: relative;*/
     z-index: 1;
     font-size: 14px;
     color: #333333;
     right: 0px;
     top: 53px;
+    /*top: -1px;*/
     background-color: #fff;
     box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.19);
     display: none;

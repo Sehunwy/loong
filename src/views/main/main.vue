@@ -2,7 +2,7 @@
   <div id="app" ref="app">
     <siderBar @siderFold="siderFold" :logo="logo"></siderBar>
     <div style="overflow-x: hidden;">
-      <div class="loong-nav" style="" :style="{'width': isMainFold ? 'calc(100% - 58px)':'calc(100% - 180px)'}" :class="mainFoldClass">
+      <div class="loong-navBar" :style="{'width': isMainFold ? 'calc(100% - 58px)':'calc(100% - 180px)'}" :class="mainFoldClass">
         <navBar></navBar>
       </div>
     </div>
@@ -52,6 +52,7 @@
     padding: 0px;
     height: 100%;
     width: 100%;
+    overflow: hidden;
   }
 
   .icon {
@@ -76,7 +77,7 @@
     overflow: hidden;
   }
 
-  .loong-nav {
+  .loong-navBar {
     position: absolute;
     top: 0px;
     right: 0px;

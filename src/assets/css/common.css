@@ -42,6 +42,10 @@
   margin-bottom: 15px;
 }
 
+.ml {
+  margin-left: 10px;
+}
+
 .dib {
   display: inline-block;
 }
@@ -60,6 +64,10 @@
 
 .fs16 {
   font-size: 16px;
+}
+
+.fs18 {
+  font-size: 18px;
 }
 
 .cursor {
@@ -105,7 +113,7 @@
 }
 
 .back-1188dd {
-  background: #1188dd;
+  background: #1188dd !important;
 }
 
 .back-28C4EF {
