@@ -1,12 +1,15 @@
 <template>
-    <div  style="width: 1000px;height: 1000px">
-      当前告警
-    </div>
+  <div style="width: 100%;height: 100%;background-color: #ffffff;overflow-y: hidden">
+    <LoongTable></LoongTable>
+  </div>
 </template>
 
 <script>
+    import LoongTable from '@/components/LoongTable/LoongTable'
     export default {
-        name: "current-alarm"
+        name: "current-alarm",
+        components: { LoongTable }
+
     }
 </script>
 
