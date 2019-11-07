@@ -10,6 +10,7 @@
 
     export default {
         name: 'App',
+
     }
 </script>
 
@@ -43,5 +44,9 @@
   p,ul,li,ol {
     margin: 0px;
     padding: 0px;
+  }
+
+  router-link {
+    text-decoration: none;
   }
 </style>

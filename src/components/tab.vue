@@ -1,9 +1,15 @@
 <template>
-  <div class="tab">
-    <div style="min-width: 970px">
+  <div style="width: 100%;height: 100%">
+    <div style="width: 100%;overflow: hidden">
+    <div class="tab">
       <span class="dib tab-active-bar" ref="activeBar"></span>
       <span v-for="(item,index) in tabArr" class="dib pr10 pl10 mr30 fs13 cursor tab-nav"
-            :class="currentView == item.component ? 'active-tab' : ''" @click="tabChange(item.component,index,item.text)">{{item.text}}</span>
+            :class="currentView == item.component ? 'active-tab' : ''"
+            @click="tabChange(item.component,index,item.text)">{{item.text}}</span>
+    </div>
+    </div>
+    <div class="mt15 showView">
+      <div :is="currentView"></div>
     </div>
   </div>
 </template>
@@ -32,10 +38,8 @@
                 beforeLeft = this.$refs.activeBar.style.left == '' ? '0px' : this.$refs.activeBar.style.left;
                 let style = document.styleSheets[0];
                 style.insertRule("@keyframes move{0%{ left: " + beforeLeft + "; }to{ left:" + left + "}}", 0);
-                console.log(style.cssRules[0].name)
                 this.$refs.activeBar.style.width = text.length * 13 + 20 + 'px';
                 this.$refs.activeBar.style.left = left;
-                this.$emit('currentCom', this.currentView);
                 this.$refs.activeBar.addEventListener('animationend', function () {
                     if (style.cssRules[0].name == 'move') {
                         style.deleteRule(0);
@@ -46,18 +50,16 @@
         mounted() {
             this.currentView = this.tabArr[0].component;
             this.$refs.activeBar.style.width = this.tabArr[0].text.length * 13 + 20 + 'px';
-            this.$emit('currentCom', this.currentView)
         }
     }
 </script>
 
 <style scoped>
   .tab {
-    width: 100%;
     border-bottom: 1px solid #ced4da;
     position: relative;
     font-size: 0;
-    overflow: hidden;
+    min-width: 970px;
   }
 
   .tab-nav {
@@ -80,6 +82,12 @@
     background-color: #1188dd;
     border-radius: 2px;
     animation: move 400ms linear;
+  }
+
+  .showView {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: auto;
   }
 
 </style>

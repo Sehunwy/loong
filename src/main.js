@@ -10,6 +10,15 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
+
+Vue.prototype.goPath = function (name, data) {//changeData是函数名
+  this.$router.push(
+    {
+      name: name,
+      params: data
+    }
+  );
+}

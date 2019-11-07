@@ -1,9 +1,6 @@
 <template>
   <div class="home-page">
-    <tab :tabArr="tabArr" @currentCom="getCurrentCom"></tab>
-    <div class="mt15 showView">
-      <div :is="currentView"></div>
-    </div>
+    <tab :tabArr="tabArr"></tab>
   </div>
 </template>
 
@@ -12,36 +9,29 @@
     import virtualCloud from '@/components/homePage/virtualCloud'
     import cloudDisk from '@/components/homePage/cloudDisk'
     import tab from '@/components/tab'
-    import '@/assets/css/common.css';
 
     export default {
         name: "homePage",
         data() {
             return {
-                currentView: '',
                 tabArr: [
                     {
-                        component: 'cloudStorage',
+                        component: cloudStorage,
                         text: '云存储'
                     },
                     {
-                        component: 'virtualCloud',
+                        component: virtualCloud,
                         text: '虚拟云'
                     },
                     {
-                        component: 'cloudDisk',
+                        component: cloudDisk,
                         text: '云盘'
                     }
                 ]
             }
         },
-        methods: {
-            getCurrentCom: function (currentView) {
-                this.currentView = currentView;
-            }
-        },
         components: {
-            cloudStorage, virtualCloud, cloudDisk, tab
+            tab
         },
     }
 </script>
@@ -52,9 +42,4 @@
     height: 100%;
   }
 
-  .showView {
-    width: 100%;
-    height: calc(100% - 60px);
-    overflow: auto;
-  }
 </style>
