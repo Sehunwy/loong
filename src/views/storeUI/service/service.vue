@@ -1,6 +1,6 @@
 <template>
   <div class="service">
-    <LoongDialog :button="dialogClickData" :title="titleDialog" :content="contentDialog" :buttons="buttonsDialog"></LoongDialog>
+    <LoongDialog :modalType="modalType" :button="dialogClickData" :title="titleDialog" :content="contentDialog" :buttons="buttonsDialog"></LoongDialog>
   </div>
 </template>
 
@@ -29,7 +29,8 @@
                             return true;
                         }
                     }
-                ]
+                ],
+                modalType: 'min'
             }
         },
         components: {
