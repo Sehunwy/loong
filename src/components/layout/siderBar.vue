@@ -5,7 +5,7 @@
     </div>
     <div class="loong-menus">
       <ul class="menuList" style="width: 100%">
-        <li class="menus-details" v-for="(item,index) in menus" :class="showClass[index].show"
+        <li class="menus-details" v-for="(item,index) in menus" :class="[showClass[index].show,showClass[index].show == 'back-1188dd'? 'menu-item-animation':'']"
             v-show="showArr[index]"
             @click="clickMenus(item.index)">
           <span class="menu-content">
@@ -275,6 +275,19 @@
     }
     to {
       width: 58px;
+    }
+  }
+
+  .menu-item-animation {
+    animation: menu-item 400ms linear;
+  }
+
+  @keyframes menu-item {
+    from {
+      width: 0px;
+    }
+    to {
+      width: calc(100% + 17px);
     }
   }
 </style>
