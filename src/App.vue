@@ -37,16 +37,23 @@
     background-color: #E9ECEF;
   }
 
-  ul,li,ol {
+  ul, li, ol {
     list-style: none;
   }
 
-  p,ul,li,ol {
+  p, ul, li, ol {
     margin: 0px;
     padding: 0px;
   }
 
   router-link {
     text-decoration: none;
+  }
+
+  button {
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent; /* 自定义边框 */
+    outline: none; /* 消除默认点击蓝色边框效果 */
   }
 </style>

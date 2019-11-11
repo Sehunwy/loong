@@ -1,54 +1,103 @@
 <template>
-  <div class="table">
-    <div class="table-header back-f8f9fa min-wid">
-      <div class="table-row header-row ptb10 c9 fs12" ref="headerRow">
-        <div v-for="(titl,index) in title" :class="[index==(title.length-1)?'':'boder-rig']"
-             class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}">
-          <span class="pl10">{{titl.title}}</span>
+  <div style="width: 100%;height: 100%">
+    <div class="table">
+      <div class="table-header back-f8f9fa min-wid">
+        <div class="table-row header-row ptb10 c9 fs12" ref="headerRow">
+          <div v-for="(titl,index) in titleData" :class="[index==(titleData.length-1)?'':'boder-rig']"
+               class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}">
+            <div>
+            <span class="fl pl10">
+               <!--            多选框-->
+            <div v-if="index==0&&chooseWay=='checkbox'" class="table-checkbox"
+                 :class="isSelect[0]?'select-checkbox':''"
+                 @click.stop="setCheckbox(0)">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-gou"></use>
+              </svg>
+            </div>
+              <!--            单选框-->
+            <div v-if="index==0&&chooseWay=='radio'" class="table-radio" style="visibility: hidden">
+              <svg class="icon fs14 radio-icon" aria-hidden="true">
+                <use xlink:href="#icon-gou"></use>
+              </svg>
+            </div>
+            </span>
+              <span class="pl10">
+              {{titl.title}}
+            </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="table-body" ref="bodyRef">
-      <div class="min-wid" ref="tableBody">
-        <div v-for="(data,ind) in datas" class="table-row body-row ptb10 c3 fs12 border-bott"
-             :class="[ind%2==0?'back-white':'back-f8f9fa']" :ref="`row${ind}`">
-          <div v-for="(titl,index) in title" :class="[index==(title.length-1)?'':'boder-rig']"
-               class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}" style="position: relative"
-               @mouseenter="mouseover(ind,index)" @mouseleave="mouseLeave(ind,index)">
-            <!--            <span v-if="index==0" class="pl10">-->
-            <!--                <input type="checkbox">-->
-            <!--            </span>-->
-            <!--超过显示可点击图标-->
-            <span v-show="iconShow[ind][index]" class="more-icon" @click="moreClick(ind,index)">
+      <div class="table-body min-wid" ref="bodyRef">
+        <div class="" ref="tableBody">
+          <div v-for="(data,ind) in datas" class="table-row body-row ptb10 c3 fs12 border-bott"
+               :class="[ind%2==0?'back-white':'back-f8f9fa']" :ref="`row${ind}`"
+               @click.stop="setCheckWay(chooseWay,ind+1)">
+            <div v-for="(titl,index) in titleData" :class="[index==(titleData.length-1)?'':'boder-rig']"
+                 class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}" style="position: relative;"
+                 @mouseenter="mouseover(ind,index)" @mouseleave="mouseLeave(ind,index)">
+              <!--超过显示可点击图标-->
+              <span v-show="iconShow[ind][index]" class="more-icon cursor-pointer" @click.stop="moreClick(ind,index)">
               <svg aria-hidden='true' class="icon">
                 <use xlink:href="#icon-iiconfont-angle-up"></use>
               </svg>
             </span>
-            <div v-show="isShowMore[ind][index]" class="show-more" :style="{top: moreTop}">
-              <!--超过显示内容-->
-              <div v-html="$options.filters.formater(data[titl.name],titl.formater,titl.pattern)"
-                   class="more-details" :ref="`showMore${ind}${index}`"></div>
-              <!--关闭超过显示内容图标-->
-              <span class="details-close cursor-pointer" @click="closeMore(ind,index)">
+              <div v-show="isShowMore[ind][index]" class="show-more" :style="{top: moreTop}" @click.stop="">
+                <!--超过显示内容-->
+                <div v-html="$options.filters.formater(data[titl.name],titl.formater,titl.pattern)"
+                     class="more-details" :ref="`showMore${ind}${index}`"></div>
+                <!--关闭超过显示内容图标-->
+                <span class="details-close cursor-pointer" @click.stop="closeMore(ind,index)">
               <svg aria-hidden='true' class="icon">
                   <use xlink:href="#icon-guanbi2"></use>
                 </svg>
             </span>
-            </div>
-            <!-- 表格显示icon-->
-            <span v-if="titl.type=='button'">
-              <span v-for="btn in titl.operations" class="pl10" :title="btn.text" @click="btn.callBack(data)">
+              </div>
+              <!-- 表格显示icon-->
+              <span v-if="titl.type=='button'">
+              <span v-for="btn in titl.operations" class="pl10 cursor-pointer" :title="btn.text"
+                    @click.stop="btn.callBack(data)">
                 <svg aria-hidden='true' class="icon">
                   <use :xlink:href="btn.icon"></use>
                 </svg>
               </span>
             </span>
-            <!-- 表格显示内容-->
-            <div v-else class="pl10 ellip" :ref="`content${ind}${index}`">
-              <span v-html="$options.filters.formater(data[titl.name],titl.formater,titl.pattern)"></span>
+              <!-- 表格显示内容-->
+              <div v-else class="ellip" :ref="`content${ind}${index}`">
+              <span class="pl10 fl">
+              <!--              多选框-->
+              <div v-if="index==0&&chooseWay=='checkbox'" class="table-checkbox"
+                   :class="isSelect[ind+1]?'select-checkbox':''"
+                   @click.stop="setCheckbox(ind+1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-gou"></use>
+                </svg>
+              </div>
+                <!--            单选框-->
+                <div v-if="index==0&&chooseWay=='radio'" class="table-radio cursor-pointer"
+                     :class="isSelect[ind+1]?'select-radio':''" @click.stop="setRadio(ind+1)">
+                <svg class="icon fs14 radio-icon" aria-hidden="true">
+                  <use xlink:href="#icon-gou"></use>
+                </svg>
+              </div>
+              </span>
+                <span class="pl10" v-html="$options.filters.formater(data[titl.name],titl.formater,titl.pattern)"></span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+    </div>
+    <div v-if="!isRequest&&isFlow" style="margin-left: calc(50% - 14px);margin-top: 10px">
+      <div id="loading">
+        <div class="loadAnimation"></div>
+        <div class="loadAnimation"></div>
+        <div class="loadAnimation"></div>
+        <div class="loadAnimation"></div>
+        <div class="loadAnimation"></div>
+        <div class="loadAnimation"></div>
       </div>
     </div>
   </div>
@@ -56,377 +105,12 @@
 
 <script>
     import {formatDate} from '@/assets/js/formatDate'  //引入时间格式化js
+    import '@/assets/css/load.css';
+
     export default {
         name: "LoongTable",
         data() {
             return {
-                title: [
-                    {
-                        name: "service",
-                        title: "服务",
-                        width: "200px",
-                    },
-                    {
-                        name: "name",
-                        title: "组名",
-                        width: "200px"
-                    },
-                    {
-                        name: "domain",
-                        title: "域名",
-                        width: ""
-                    },
-                    {
-                        name: "autoFailover",
-                        title: "故障切换策略",
-                        width: "201px"
-                    },
-                    {
-                        name: "ctime",
-                        title: "修改时间",
-                        formater: 'dateFormat',
-                        pattern: "Y-M-D h:m:s"
-                    },
-                    {
-                        name: "ctime",
-                        title: "修改时间",
-                        formater: function (value, type) {
-                            let d = new Date(parseInt(value));
-                            let Y = d.getFullYear();
-                            let M = d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1;
-                            let date = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
-                            let hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
-                            let minute = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
-                            let second = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-                            if (type == '年月日' || type == 1) {
-                                return Y + "年" + M + "月" + date + "日";
-                            }
-                            if (type == 'Y-M-D' || type == 2) {
-                                return Y + "-" + M + "-" + date;
-                            }
-                            if (type == 'Y.M.D' || type == 3) {
-                                return Y + "." + M + "." + date;
-                            }
-                            if (type == 'Y/M/D' || type == 4) {
-                                return Y + "/" + M + "/" + date;
-                            }
-                            if (type == '年月日 时分秒' || type == 5) {
-                                return Y + "年" + M + "月" + date + "日 " + hour + ":" + minute + ":" + second;
-                            }
-                            if (type == 'Y-M-D h:m:s' || type == 6) {
-                                return Y + "-" + M + "-" + date + " " + hour + ":" + minute + ":" + second;
-                            }
-                            if (type == 'Y.M.D h:m:s' || type == 7) {
-                                return Y + "." + M + "." + date + " " + hour + ":" + minute + ":" + second;
-                            }
-                            if (type == 'Y/M/D h:m:s' || type == 8) {
-                                return Y + "/" + M + "/" + date + " " + hour + ":" + minute + ":" + second;
-                            }
-                            if (type == '年月日 时分' || type == 9) {
-                                return Y + "年" + M + "月" + date + "日 " + hour + ":" + minute;
-                            }
-                            if (type == 'Y-M-D h:m' || type == 10) {
-                                return Y + "-" + M + "-" + date + " " + hour + ":" + minute;
-                            }
-                            if (type == 'Y.M.D h:m' || type == 11) {
-                                return Y + "." + M + "." + date + " " + hour + ":" + minute;
-                            }
-                            if (type == 'Y/M/D h:m' || type == 12) {
-                                return Y + "/" + M + "/" + date + " " + hour + ":" + minute;
-                            }
-                            return value;
-                        },
-                        pattern: "Y-M-D h:m:s"
-                    },
-                    {
-                        "name": "operation",
-                        "title": "操作",
-                        "type": "button",
-                        "width": '100px',
-                        "operations": [{
-                            "icon": "#icon-rilizuo",
-                            "text": "扩容",
-                            "callBack": function (data) {
-                                console.log(data);
-                            }
-                        }, {
-                            "icon": "#icon-rilizuo",
-                            "text": "修改",
-                            "callBack": function (data) {
-                                console.log(data);
-                            }
-                        }, {
-                            "icon": "#icon-rilizuo",
-                            "text": "test",
-                            "callBack": function (data,) {
-                                console.log(data);
-                                alert("ssss");
-                            }
-                        }]
-                    }],
-                datas: [
-                    {
-                        "name": "1",
-                        "domain": ".com     张三张三张三张三张三张三张三张三张三张三张三张三张三testttttttttttttttttttttttttttttt",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "2",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "3",
-                        "domain": "cccaf2.ccc",
-                        "service": "HTTP",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "4",
-                        "domain": "dd.cn",
-                        "service": "FTP",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "5",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "6",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "7",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "8",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    },
-                    {
-                        "name": "9",
-                        "domain": "cccaf2.ccc",
-                        "service": "CIFS",
-                        "balancer": "Service",
-                        "autoFailover": true,
-                        "failbackPolicy": "auto",
-                        "ctime": 1564736083000,
-                        "count": 0
-                    },
-                    {
-                        "name": "10",
-                        "domain": "dd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cndd.cn",
-                        "service": "NFS",
-                        "balancer": "Round-Robin",
-                        "autoFailover": true,
-                        "failbackPolicy": "manual",
-                        "ctime": 1564736581000,
-                        "count": 1
-                    }
-                ],
-                isMultiple: 'multiple',
                 setWid: 0,
                 count: 0,
                 notWid: [],
@@ -438,14 +122,26 @@
                 reallyShow: [[]],
                 prompt: [-1, -1, -1, -1],
                 moreTop: '10px',
+                isSelect: [],
+                countT: 0,
+                countF: 0,
+                selectData: []
             }
+        },
+        props: {
+            titleData: {},
+            datas: {},
+            chooseWay: {},
+            pageNum: {},
+            isRequest: {},
+            isFlow:{}
         },
         methods: {
             getWid: function () {
-                for (let i in this.title) {
-                    if (this.title[i].width != '' && this.title[i].width != undefined) {
-                        this.setWid = this.setWid + parseInt(this.title[i].width);
-                        this.dataWid[i] = parseInt(this.title[i].width) - 31;
+                for (let i in this.titleData) {
+                    if (this.titleData[i].width != '' && this.titleData[i].width != undefined) {
+                        this.setWid = this.setWid + parseInt(this.titleData[i].width);
+                        this.dataWid[i] = parseInt(this.titleData[i].width) - 31;
                     } else {
                         this.count++;
                         this.notWid.push(i)
@@ -464,19 +160,22 @@
                     this.isShowMore[dataI] = [];
                     this.reallyShow[dataI] = [];
                     this.iconShow[dataI] = [];
-                    for (let titleI in this.title) {
+                    this.isSelect[dataI] = false;
+                    this.countF++;
+                    for (let titleI in this.titleData) {
                         this.isShowMore[dataI][titleI] = false;
                         this.reallyShow[dataI][titleI] = false;
                         this.iconShow[dataI][titleI] = false;
                     }
                 }
+                this.isSelect[this.datas.length] = false;
             },
             isShow: function () {
                 let content;
                 for (let dataI in this.datas) {
-                    for (let titleI in this.title) {
+                    for (let titleI in this.titleData) {
                         content = this.$refs[`content${dataI}${titleI}`];
-                        if (content != undefined) {
+                        if (content != undefined && content.length != 0) {
                             if (content[0].offsetWidth < content[0].scrollWidth) {
                                 this.reallyShow[dataI][titleI] = true;
                             } else {
@@ -533,6 +232,69 @@
                 } else {
                     this.moreTop = '10px'
                 }
+            },
+            // 多选框是否选中
+            setCheckbox: function (index) {
+                let isSelect = !this.isSelect[index];
+                if (index == 0) {
+                    this.isSelectAll(isSelect);
+                } else {
+                    this.$set(this.isSelect, index, isSelect);
+                    if (isSelect) {
+                        this.countT++;
+                        this.countF--;
+                        this.selectData.push(this.datas[index - 1]);
+                    } else {
+                        this.countT--;
+                        this.countF++;
+                        let subscript = this.selectData.indexOf(this.selectData[index - 1]);
+                        this.selectData.splice(subscript, 1);
+                    }
+                    if (this.countT == (this.isSelect.length - 1) || this.countF == (this.isSelect.length - 1)) {
+                        this.isSelectAll(isSelect);
+                    } else {
+                        this.$set(this.isSelect, 0, false);
+                    }
+                }
+                this.$emit('selectData', this.selectData)
+            },
+            isSelectAll: function (isSelect) {
+                if (isSelect) {
+                    this.selectData = JSON.parse(JSON.stringify(this.datas)) ;
+                    this.countT = (this.isSelect.length - 1);
+                    this.countF = 0;
+                } else {
+                    this.selectData = [];
+                    this.countF = (this.isSelect.length - 1);
+                    this.countT = 0;
+                }
+                for (let i = 0; i < this.isSelect.length; i++) {
+                    this.$set(this.isSelect, i, isSelect);
+                }
+            },
+            // 单选框是否选中
+            setRadio: function (index) {
+                let isSelect = !this.isSelect[index];
+                if (isSelect) {
+                    this.selectData = this.datas[index - 1];
+                    if (this.countT != 0) {
+                        this.$set(this.isSelect, this.countT, false);
+                    }
+                    this.countT = index;
+                } else {
+                    this.countT = 0;
+                    this.selectData = [];
+                }
+                this.$set(this.isSelect, index, isSelect);
+                this.$emit('selectData', this.selectData)
+            },
+            // 行选中
+            setCheckWay: function (way, index) {
+                if (way == "checkbox") {
+                    this.setCheckbox(index)
+                } else if (way == "radio") {
+                    this.setRadio(index);
+                }
             }
         },
         created() {
@@ -541,18 +303,33 @@
         },
         mounted() {
             let _this = this;
+            let page;
             this.titleWid = this.$refs.headerRow.offsetWidth;
             this.bodyWid = this.$refs.tableBody.offsetWidth;
             window.onresize = () => {
                 this.titleWid = this.$refs.headerRow.offsetWidth;
                 this.bodyWid = this.$refs.tableBody.offsetWidth;
             };
-            this.$refs.bodyRef.onscroll  = () => {
-                if(_this.prompt[0]!=-1) {
-                    this.displayPosition(this.prompt[0],this.prompt[1]);
+            this.$refs.bodyRef.onscroll = () => {
+                if (_this.prompt[0] != -1) {
+                    this.displayPosition(this.prompt[0], this.prompt[1]);
                 }
-
-            }
+                if(this.isFlow) {
+                    let bodyOffHei = this.$refs.bodyRef.offsetHeight;
+                    let scrTop = this.$refs.bodyRef.scrollTop;
+                    let scrHei = this.$refs.bodyRef.scrollHeight;
+                    if(scrHei == bodyOffHei+scrTop || scrHei+17 == bodyOffHei+scrTop) {
+                        if(this.pageNum != undefined) {
+                            page = this.pageNum;
+                            page = page + 1;
+                            this.$emit('tablePageNum',page);
+                        }
+                    }
+                }
+            };
+            this.$nextTick(function () {
+                this.isShow();
+            })
         },
         filters: {
             //时间格式化
@@ -574,6 +351,22 @@
                 this.$nextTick(function () {
                     this.isShow();
                 })
+            },
+            datas: function (newVal, oldVal) {
+                this.prompt = [-1, -1, -1, -1];
+                this.isSelect = [];
+                this.countT = 0;
+                this.countF = 0;
+                this.selectData = [];
+                this.$emit('selectData', []);
+                this.arrayInit();
+                this.$nextTick(function () {
+                    this.titleWid = this.$refs.headerRow.offsetWidth;
+                    this.bodyWid = this.$refs.tableBody.offsetWidth;
+                    let difference = this.titleWid - this.bodyWid;
+                    this.getRemainWid(this.titleWid, difference);
+                    this.isShow();
+                })
             }
         }
     }
@@ -581,7 +374,7 @@
 
 <style scoped>
   .min-wid {
-    min-width: 600px;
+    min-width: 1130px;
   }
 
   .ptb10 {
@@ -602,8 +395,9 @@
 
   .table {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    height: calc(100% - 30px);
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .table-row:hover {
@@ -622,8 +416,9 @@
   }
 
   .table-body {
-    height: calc(100% - 55px);
-    overflow: auto;
+    height: calc(100% - 38px);;
+    /*height: calc(100% - 78px);*/
+    overflow-y: auto;
     position: relative;
   }
 
@@ -671,7 +466,48 @@
 
   .show-more {
     position: relative;
-    /*top: 10px;*/
-    /*top: -12px;*/
+  }
+
+  .table-checkbox {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #ccc;
+    float: left;
+    border-radius: 2px;
+    line-height: 14px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .select-checkbox {
+    width: 14px;
+    height: 14px;
+    border: none;
+    background-color: #1188dd;
+  }
+
+  .table-radio {
+    position: relative;
+    float: left;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #AAAAAA;
+    color: #ffffff;
+  }
+
+  .radio-icon {
+    position: absolute;
+    left: -1px;
+    top: -1px
+  }
+
+  .select-radio {
+    width: 14px;
+    height: 14px;
+    border: none;
+    background-color: #1188dd;
   }
 </style>

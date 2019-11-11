@@ -38,6 +38,10 @@
   padding-top: 20px;
 }
 
+.mr10 {
+  margin-right: 10px;
+}
+
 .mr30 {
   margin-right: 30px;
 }
@@ -164,3 +168,35 @@
   display: flex;
   justify-content: space-between
 }
+
+.button-common {
+  height: 32px;
+  padding: 0 20px;
+  line-height: 32px;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  display: inline-block;
+}
+
+.confirm-button {
+  background-color: #1188DD;
+  box-shadow: 0px 1px 8px 0px rgba(17, 136, 221, 0.4);
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background: #0066bb;
+}
+
+.cancel-button {
+  background: #EEF7FF;
+  color: #1188DD;
+}
+
+.cancel-button:hover {
+  background: #DDEEFF;
+}
+
