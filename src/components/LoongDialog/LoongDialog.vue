@@ -17,13 +17,11 @@
           <div class="body-wrap">
             <div class="dialog-content" v-html="content" :class="[modalType=='min'?'min-dialog-content':'max-dialog-content']">
             </div>
-            <div class="dialog-buttons">
+            <div class="dialog-buttons" v-show="buttons.length>0">
               <div class="buttons-wrap">
                 <button v-for="button in buttons" :class="button.className" @click="buttonClick(button.callback)">
                   {{button.txt}}
                 </button>
-<!--                <button class="confirm-button button-common">确定</button>-->
-<!--                <button class="cancel-button button-common">取消</button>-->
               </div>
             </div>
           </div>
@@ -200,14 +198,13 @@
 
   .dialog-content {
     width: 100%;
-    /*min-height: 257px;*/
     overflow: auto;
     line-height: 25px;
     background-color: #ffffff;
   }
 
   .min-dialog-content {
-    min-height: 257px;
+    min-height: 320px;
   }
 
   .max-dialog-content {
