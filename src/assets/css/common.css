@@ -200,3 +200,7 @@
   background: #DDEEFF;
 }
 
+.clear {
+  clear: both;
+}
+

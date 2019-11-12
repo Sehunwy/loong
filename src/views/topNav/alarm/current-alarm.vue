@@ -12,7 +12,7 @@
       <LoongTable :titleData="title" :datas="datas" :chooseWay="chooseWay"
                   @selectData="getData" @tablePageNum="getPageData" :pageNum="pageNum" :isRequest="isRequest" :isFlow="isFlow"></LoongTable>
     </div>
-    <div style="width: 100%;overflow: hidden;margin-top: 50px" v-if="!isFlow">
+    <div style="width: 100%;overflow: hidden;margin-top: 50px" v-if="isFlow=='page'">
       <div style="margin-left: calc(50% - 210px);min-width: 500px;">
         <loongPagination v-if="isRequest" :totalPage="totalPage" :limits="limits" :pageNum="pageNum"
                          :pageSize="pageSize" @pageInfo="getPageData"></loongPagination>
@@ -142,7 +142,7 @@
                 totalPage: 1,
                 isRequest: false,
                 limits: [10, 20, 30, 40, 50, 60],
-                isFlow: true,
+                isFlow: "page", // flow 流加载  page 分页加载
                 existPage:[]
             }
         },
@@ -169,7 +169,7 @@
                 })
                     .then(response => {
                         this.totalPage = response.data.totalPage;
-                        if(this.isFlow) {
+                        if(this.isFlow == "flow") {
                             if(this.existPage.indexOf(this.pageNum) == -1) {
                                 this.existPage[this.pageNum] = this.pageNum;
                                 this.datas = this.datas.concat(response.data.data);
@@ -184,7 +184,7 @@
                     })
             },
             getPageData: function (data) {
-                if(this.isFlow) {
+                if(this.isFlow == "flow") {
                     this.pageNum = data;
                 }
                 else {
