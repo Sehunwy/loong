@@ -3,7 +3,7 @@
     <div v-html="button" @click="setShowDialog(true)"></div>
 <!--    <button class="confirm-button button-common" @click="setShowDialog(true)">button</button>-->
     <div v-show="showDialog" class="loong-dialog">
-      <div class="dialog-popup" ref="loongDialog" :style="{top:top,left:left}">
+      <div class="dialog-popup" ref="loongDialog" :style="{top:top,left:left}" :class="[modalType=='min'?'min-dialog':'max-dialog']">
         <div class="dialog-popupTop fs14" @mousedown="mousedown($event)">
           <div class="ellip dialog-title" v-html="title">
           </div>
@@ -15,15 +15,13 @@
         </div>
         <div class="dialog-body-wrap">
           <div class="body-wrap">
-            <div class="dialog-content" v-html="content">
+            <div class="dialog-content" v-html="content" :class="[modalType=='min'?'min-dialog-content':'max-dialog-content']">
             </div>
-            <div class="dialog-buttons">
+            <div class="dialog-buttons" v-show="buttons.length>0">
               <div class="buttons-wrap">
                 <button v-for="button in buttons" :class="button.className" @click="buttonClick(button.callback)">
                   {{button.txt}}
                 </button>
-<!--                <button class="confirm-button button-common">确定</button>-->
-<!--                <button class="cancel-button button-common">取消</button>-->
               </div>
             </div>
           </div>
@@ -121,7 +119,8 @@
             button:{},
             title:{},
             content:{},
-            buttons:{}
+            buttons:{},
+            modalType:{}
         },
     }
 </script>
@@ -151,8 +150,14 @@
   .dialog-popup {
     position: fixed;
     z-index: 10000;
-    /*left: calc(50% - 290px);*/
+  }
+
+  .min-dialog {
     width: 580px;
+  }
+
+  .max-dialog {
+    width: 860px;
   }
 
   .dialog-popupTop {
@@ -193,11 +198,17 @@
 
   .dialog-content {
     width: 100%;
-    min-height: 257px;
     overflow: auto;
     line-height: 25px;
     background-color: #ffffff;
+  }
 
+  .min-dialog-content {
+    min-height: 320px;
+  }
+
+  .max-dialog-content {
+    height: 496px;
   }
 
   .dialog-buttons {

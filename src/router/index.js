@@ -44,7 +44,7 @@ export default new Router({
         {
           path: '/cloudStorage/service',
           name: 'service',
-          meta: {title: '服务管理', iconClose: 'icon-fuwuqijiqun', iconOpen: 'icon-cunchufuwuzhankai', isMenus: true},
+          meta: {title: '服务管理', iconClose: 'icon-fuwuqijiqun', iconOpen: 'icon-fuwuqijiqun', isMenus: true},
           component: () => import('@/views/storeUI/service/service'),
         },
         {
@@ -210,7 +210,7 @@ export default new Router({
       component: layout,
       children: [
         {
-          path: '/user1',
+          path: '/user',
           name: 'user',
           component: () => import('@/views/user'),
         }
@@ -223,7 +223,7 @@ export default new Router({
       component: layout,
       children: [
         {
-          path: '/set1',
+          path: '/set',
           name: 'set',
           component: () => import('@/views/set'),
         }

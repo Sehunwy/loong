@@ -90,7 +90,7 @@
       </div>
 
     </div>
-    <div v-if="!isRequest&&isFlow" style="margin-left: calc(50% - 14px);margin-top: 10px">
+    <div v-if="!isRequest&&isFlow=='flow'" style="margin-left: calc(50% - 14px);margin-top: 10px">
       <div id="loading">
         <div class="loadAnimation"></div>
         <div class="loadAnimation"></div>
@@ -314,7 +314,7 @@
                 if (_this.prompt[0] != -1) {
                     this.displayPosition(this.prompt[0], this.prompt[1]);
                 }
-                if(this.isFlow) {
+                if(this.isFlow == 'flow') {
                     let bodyOffHei = this.$refs.bodyRef.offsetHeight;
                     let scrTop = this.$refs.bodyRef.scrollTop;
                     let scrHei = this.$refs.bodyRef.scrollHeight;

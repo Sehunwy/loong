@@ -5,7 +5,8 @@
     </div>
     <div class="loong-menus">
       <ul class="menuList" style="width: 100%">
-        <li class="menus-details" v-for="(item,index) in menus" :class="[showClass[index].show,showClass[index].show == 'back-1188dd'? 'menu-item-animation':'']"
+        <li class="menus-details" v-for="(item,index) in menus"
+            :class="[showClass[index].show,showClass[index].show == 'back-1188dd'? 'menu-item-animation':'']"
             v-show="showArr[index]"
             @click="clickMenus(item.index)">
           <span class="menu-content">
@@ -41,6 +42,7 @@
                 showClass: [],
                 foldClass: '',
                 foldWid: '180px',
+                selectSpread: []
             }
         },
         props: {
@@ -81,7 +83,6 @@
                     this.getSelectMenus(this.menus[index].path);
                 }
                 for (let i in this.menus) {
-
                     if (this.menus[index].isRoot) {
                         if (!this.menus[i].isRoot) {
                             this.$set(this.showArr, i, false);
@@ -89,13 +90,12 @@
                     }
                     if (this.menus[index].hasChildren) {
                         if (!this.menus[i].isRoot) {
-                            if(this.showClass[i].show != 'back-1188dd') {
+                            if (this.showClass[i].show != 'back-1188dd') {
                                 this.showClass[i] = {
                                     show: 'back-38455A',
                                     saveShow: 'back-38455A'
                                 }
-                            }
-                            else  {
+                            } else {
                                 this.showClass[i].saveShow = 'back-38455A';
                             }
                             this.$set(this.showClass, i, this.showClass[i]);
@@ -103,13 +103,12 @@
                         if (this.menus[i].parentId == index) {
                             isShow = reallyShow[i];
                             this.$set(this.showArr, i, !reallyShow[i]);
-                            if(this.showClass[i].show != 'back-1188dd') {
+                            if (this.showClass[i].show != 'back-1188dd') {
                                 this.showClass[i] = {
                                     show: 'back-2A374D',
                                     saveShow: 'back-2A374D'
                                 }
-                            }
-                            else {
+                            } else {
                                 this.showClass[i].saveShow = 'back-2A374D';
                             }
                             this.$set(this.showClass, i, this.showClass[i]);
@@ -137,16 +136,54 @@
                 }
             },
             getSelectMenus: function (path) {
+                this.selectSpread = [];
                 for (let i in this.menus) {
                     if (this.menus[i].path == path) {
                         this.showClass[i].show = 'back-1188dd';
                         this.$set(this.showClass, i, this.showClass[i]);
-                    }
-                    else {
+                        this.getSpreadMenus(this.menus[i].parentId, 'back-2A374D')
+                    } else {
+                        if(!this.menus[i].isRoot) {
+                            this.$set(this.showArr, i, false);
+                        }
                         this.showClass[i].show = this.showClass[i].saveShow;
                         this.$set(this.showClass, i, this.showClass[i]);
+                        this.menus[i].icon = this.menus[i].meta.iconClose;
+                        this.$set(this.menus, i, this.menus[i]);
                     }
                 }
+            },
+            getSpreadMenus: function (parentId, show) {
+                this.$nextTick(function () {
+                    if (parentId != -1) {
+                        this.selectSpread.push({
+                            parentId: parentId,
+                            show: show
+                        })
+                        this.getSpreadMenus(this.menus[parentId].parentId, 'back-38455A')
+                    }
+                    else {
+                        this.setSpread();
+                    }
+                })
+            },
+            setSpread: function () {
+                this.$nextTick(function () {
+                    for (let i in this.menus) {
+                        for (let j in this.selectSpread) {
+                            if (this.menus[i].parentId == this.selectSpread[j].parentId) {
+                                this.$set(this.showArr, i, true);
+                                if (this.showClass[i].show != 'back-1188dd') {
+                                    this.showClass[i].show = this.selectSpread[j].show;
+                                }
+                                this.$set(this.showClass, i, this.showClass[i]);
+                            } else if (this.menus[i].index == this.selectSpread[j].parentId) {
+                                this.menus[i].icon = this.menus[i].meta.iconOpen;
+                                this.$set(this.menus, i, this.menus[i]);
+                            }
+                        }
+                    }
+                })
             },
             isFoldClick: function () {
                 this.isFold = !this.isFold;
