@@ -8,7 +8,7 @@
             <div>
             <span class="fl pl10">
                <!--            多选框-->
-            <div v-if="index==0&&chooseWay=='checkbox'" class="table-checkbox"
+            <div v-if="index==0&&chooseWay=='checkbox'&&selectWay=='selectBox'" class="table-checkbox"
                  :class="isSelect[0]?'select-checkbox':''"
                  @click.stop="setCheckbox(0)">
               <svg class="icon" aria-hidden="true">
@@ -16,7 +16,8 @@
               </svg>
             </div>
               <!--            单选框-->
-            <div v-if="index==0&&chooseWay=='radio'" class="table-radio" style="visibility: hidden">
+            <div v-if="index==0&&chooseWay=='radio'&&selectWay=='selectBox'" class="table-radio"
+                 style="visibility: hidden">
               <svg class="icon fs14 radio-icon" aria-hidden="true">
                 <use xlink:href="#icon-gou"></use>
               </svg>
@@ -32,7 +33,7 @@
       <div class="table-body min-wid" ref="bodyRef">
         <div class="" ref="tableBody">
           <div v-for="(data,ind) in datas" class="table-row body-row ptb10 c3 fs12 border-bott"
-               :class="[ind%2==0?'back-white':'back-f8f9fa']" :ref="`row${ind}`"
+               :class="[ind%2==0?'back-white':'back-f8f9fa',isSelect[ind+1]&&selectWay=='row'?'table-row-active':'']" :ref="`row${ind}`"
                @click.stop="setCheckWay(chooseWay,ind+1)">
             <div v-for="(titl,index) in titleData" :class="[index==(titleData.length-1)?'':'boder-rig']"
                  class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}" style="position: relative;"
@@ -67,7 +68,7 @@
               <div v-else class="ellip" :ref="`content${ind}${index}`">
               <span class="pl10 fl">
               <!--              多选框-->
-              <div v-if="index==0&&chooseWay=='checkbox'" class="table-checkbox"
+              <div v-if="index==0&&chooseWay=='checkbox'&&selectWay=='selectBox'" class="table-checkbox"
                    :class="isSelect[ind+1]?'select-checkbox':''"
                    @click.stop="setCheckbox(ind+1)">
                 <svg class="icon" aria-hidden="true">
@@ -75,14 +76,15 @@
                 </svg>
               </div>
                 <!--            单选框-->
-                <div v-if="index==0&&chooseWay=='radio'" class="table-radio cursor-pointer"
+                <div v-if="index==0&&chooseWay=='radio'&&selectWay=='selectBox'" class="table-radio cursor-pointer"
                      :class="isSelect[ind+1]?'select-radio':''" @click.stop="setRadio(ind+1)">
                 <svg class="icon fs14 radio-icon" aria-hidden="true">
                   <use xlink:href="#icon-gou"></use>
                 </svg>
               </div>
               </span>
-                <span class="pl10" v-html="$options.filters.formater(data[titl.name],titl.formater,titl.pattern)"></span>
+                <span class="pl10"
+                      v-html="$options.filters.formater(data[titl.name],titl.formater,titl.pattern)"></span>
               </div>
             </div>
           </div>
@@ -134,7 +136,8 @@
             chooseWay: {},
             pageNum: {},
             isRequest: {},
-            isFlow:{}
+            isFlow: {},
+            selectWay: {}
         },
         methods: {
             getWid: function () {
@@ -218,6 +221,7 @@
                 this.$set(this.isShowMore[dataI], titleI, false);
                 this.isShowMore.push();
             },
+            // 查看更多显示位置
             displayPosition: function (dataI, titleI) {
                 let showOffHei;
                 let offTop;
@@ -256,11 +260,11 @@
                         this.$set(this.isSelect, 0, false);
                     }
                 }
-                this.$emit('selectData', this.selectData)
+                this.$emit('selectData', this.selectData);
             },
             isSelectAll: function (isSelect) {
                 if (isSelect) {
-                    this.selectData = JSON.parse(JSON.stringify(this.datas)) ;
+                    this.selectData = JSON.parse(JSON.stringify(this.datas));
                     this.countT = (this.isSelect.length - 1);
                     this.countF = 0;
                 } else {
@@ -314,15 +318,15 @@
                 if (_this.prompt[0] != -1) {
                     this.displayPosition(this.prompt[0], this.prompt[1]);
                 }
-                if(this.isFlow == 'flow') {
+                if (this.isFlow == 'flow') {
                     let bodyOffHei = this.$refs.bodyRef.offsetHeight;
                     let scrTop = this.$refs.bodyRef.scrollTop;
                     let scrHei = this.$refs.bodyRef.scrollHeight;
-                    if(scrHei == bodyOffHei+scrTop || scrHei+17 == bodyOffHei+scrTop) {
-                        if(this.pageNum != undefined) {
+                    if (scrHei == bodyOffHei + scrTop || scrHei + 17 == bodyOffHei + scrTop) {
+                        if (this.pageNum != undefined) {
                             page = this.pageNum;
                             page = page + 1;
-                            this.$emit('tablePageNum',page);
+                            this.$emit('tablePageNum', page);
                         }
                     }
                 }
@@ -402,6 +406,12 @@
 
   .table-row:hover {
     background-color: #F3F5F7 !important;
+  }
+
+  .table-row-active {
+    background-color: #EEF7FF;
+    color: #1188DD;
+    cursor: pointer
   }
 
   .table-header {
