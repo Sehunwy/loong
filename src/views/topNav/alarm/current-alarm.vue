@@ -10,7 +10,7 @@
     </div>
     <div style="height: calc(100% - 150px);overflow: auto;" ref="table">
       <LoongTable :titleData="title" :datas="datas" :chooseWay="chooseWay"
-                  @selectData="getData" @tablePageNum="getPageData" :pageNum="pageNum" :isRequest="isRequest" :isFlow="isFlow" :selectWay="selectWay"></LoongTable>
+                  @selectData="getData" @tablePageNum="getPageData" :pageNum="pageNum" :isRequest="isRequest" :isFlow="isFlow" :selectWay="selectWay" :tableHei="tableHei"></LoongTable>
     </div>
     <div style="width: 100%;overflow: hidden;margin-top: 50px" v-if="isFlow=='page'">
       <div style="margin-left: calc(50% - 210px);min-width: 500px;">
@@ -136,8 +136,9 @@
                     }],
                 datas: [],
                 chooseWay: 'checkbox',  // checkbox 多选   radio 单选
-                selectWay:"selectBox", // row 行选中   selectBox check选中
+                selectWay:"selectBox", // row 行选中   selectBox check选框选中
                 selectDatas: [],
+                tableHei: "42px",
                 pageSize: 20,
                 pageNum: 1,
                 totalPage: 1,

@@ -2,7 +2,7 @@
   <div style="width: 100%;height: 100%">
     <div class="table">
       <div class="table-header back-f8f9fa min-wid">
-        <div class="table-row header-row ptb10 c9 fs12" ref="headerRow">
+        <div class="table-row header-row c9 fs12" ref="headerRow" :style="{height:tableHei,lineHeight:tableHei}" >
           <div v-for="(titl,index) in titleData" :class="[index==(titleData.length-1)?'':'boder-rig']"
                class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}">
             <div>
@@ -10,14 +10,14 @@
                <!--            多选框-->
             <div v-if="index==0&&chooseWay=='checkbox'&&selectWay=='selectBox'" class="table-checkbox"
                  :class="isSelect[0]?'select-checkbox':''"
-                 @click.stop="setCheckbox(0)">
+                 @click.stop="setCheckbox(0)" :style="{marginTop: (parseInt(tableHei) - 14)/2 +'px'}">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-gou"></use>
               </svg>
             </div>
               <!--            单选框-->
             <div v-if="index==0&&chooseWay=='radio'&&selectWay=='selectBox'" class="table-radio"
-                 style="visibility: hidden">
+                 style="visibility: hidden" :style="{marginTop: (parseInt(tableHei) - 14)/2 +'px'}">
               <svg class="icon fs14 radio-icon" aria-hidden="true">
                 <use xlink:href="#icon-gou"></use>
               </svg>
@@ -32,8 +32,8 @@
       </div>
       <div class="table-body min-wid" ref="bodyRef">
         <div class="" ref="tableBody">
-          <div v-for="(data,ind) in datas" class="table-row body-row ptb10 c3 fs12 border-bott"
-               :class="[ind%2==0?'back-white':'back-f8f9fa',isSelect[ind+1]&&selectWay=='row'?'table-row-active':'']" :ref="`row${ind}`"
+          <div v-for="(data,ind) in datas" class="table-row body-row c3 fs12 border-bott"
+               :class="[ind%2==0?'back-white':'back-f8f9fa',isSelect[ind+1]&&selectWay=='row'?'table-row-active':'']" :style="{height:tableHei,lineHeight:tableHei}" :ref="`row${ind}`"
                @click.stop="setCheckWay(chooseWay,ind+1)">
             <div v-for="(titl,index) in titleData" :class="[index==(titleData.length-1)?'':'boder-rig']"
                  class="row-details pl20 pr10" :style="{width:dataWid[index]+'px'}" style="position: relative;"
@@ -69,7 +69,7 @@
               <span class="pl10 fl">
               <!--              多选框-->
               <div v-if="index==0&&chooseWay=='checkbox'&&selectWay=='selectBox'" class="table-checkbox"
-                   :class="isSelect[ind+1]?'select-checkbox':''"
+                   :class="isSelect[ind+1]?'select-checkbox':''"  :style="{marginTop: (parseInt(tableHei) - 14)/2 +'px'}"
                    @click.stop="setCheckbox(ind+1)">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-gou"></use>
@@ -77,7 +77,7 @@
               </div>
                 <!--            单选框-->
                 <div v-if="index==0&&chooseWay=='radio'&&selectWay=='selectBox'" class="table-radio cursor-pointer"
-                     :class="isSelect[ind+1]?'select-radio':''" @click.stop="setRadio(ind+1)">
+                     :class="isSelect[ind+1]?'select-radio':''" @click.stop="setRadio(ind+1)" :style="{marginTop: (parseInt(tableHei) - 14)/2 +'px'}">
                 <svg class="icon fs14 radio-icon" aria-hidden="true">
                   <use xlink:href="#icon-gou"></use>
                 </svg>
@@ -137,7 +137,8 @@
             pageNum: {},
             isRequest: {},
             isFlow: {},
-            selectWay: {}
+            selectWay: {},
+            tableHei: {}
         },
         methods: {
             getWid: function () {
@@ -381,10 +382,6 @@
     min-width: 1130px;
   }
 
-  .ptb10 {
-    padding: 10px 0;
-  }
-
   .back-f8f9fa {
     background-color: #f8f9fa;
   }
@@ -403,6 +400,11 @@
     overflow-x: auto;
     overflow-y: hidden;
   }
+
+  /*.table-row {*/
+  /*  height: 42px;*/
+  /*  line-height: 42px;*/
+  /*}*/
 
   .table-row:hover {
     background-color: #F3F5F7 !important;

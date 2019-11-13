@@ -95,28 +95,6 @@ export default new Router({
           meta: {title: '高级管理', iconClose: 'icon-gaojishezhi', iconOpen: 'icon-gaojishezhi', isMenus: true},
           component: () => import('@/views/storeUI/senior/senior'),
         }
-        // {
-        //   path: '/basic',
-        //   name: 'basic',
-        //   meta: {title: '应用管理1-1',iconClose:'icon-yunguanlishouqi',iconOpen:'icon-yunguanlizhankai'},
-        //   redirect: '/test1-1/basic/test1',
-        //   // component: layout,
-        //   component: () => import('@/views/storeUI/service/index'),
-        //   children: [
-        //     {
-        //       path: '/test1-1/basic/test1',
-        //       name: 'test1',
-        //       meta: {title: '设备管理1-1-1',iconClose:'icon-yunguanlishouqi',iconOpen:'icon-yunguanlizhankai'},
-        //       component: test
-        //     },
-        //     {
-        //       path: '/test1-1/basic/test2',
-        //       name: 'test2',
-        //       meta: {title: '文件管理1-1-2',iconClose:'icon-yunguanlishouqi',iconOpen:'icon-yunguanlizhankai'},
-        //       component: test1
-        //     }
-        //   ]
-        // },
       ]
     },
     {
@@ -229,8 +207,56 @@ export default new Router({
         }
       ]
     },
+
+    // 测试组件
     {
-      // 会匹配所有路径  捕获所有路由或 404 Not found 路由
+      path: '/test',
+      name: 'test',
+      meta: {title: '组件', iconClose: 'icon-yunguanlishouqi', iconOpen: 'icon-yunguanlizhankai'},
+      component: layout,
+      redirect: '/test/loongBalloonTip',
+      children: [        //子路由,嵌套路由
+        {
+          path: '/test/loongBalloonTip', // 气泡组件
+          name: 'loongBalloonTip',
+          meta: {title: '气泡组件', iconClose: 'icon-fuwuguanli', iconOpen: 'icon-fuwuguanli'},
+          component: () => import('@/views/test/balloonTip'),
+        },
+        {
+          path: '/test/tab',
+          name: 'tab',
+          meta: {title: 'tab组件', iconClose: 'icon-bumenguanli', iconOpen: 'icon-bumenguanli'},
+          component: () => import('@/views/test/tab'),
+        },
+        {
+          path: '/cloudDisk/member',
+          name: 'member',
+          meta: {title: '成员管理', iconClose: 'icon-chengyuanguanli', iconOpen: 'icon-chengyuanguanli'},
+          component: () => import('@/views/diskUI/member/member'),
+        },
+        {
+          path: '/cloudDisk/group',
+          name: 'group-management',
+          meta: {title: '群组管理', iconClose: 'icon-qunzuguanli', iconOpen: 'icon-qunzuguanli'},
+          component: () => import('@/views/diskUI/group/group'),
+        },
+        {
+          path: '/cloudDisk/domainControl',
+          name: 'domainControl',
+          meta: {title: '域控管理', iconClose: 'icon-yukongguanli', iconOpen: 'icon-yukongguanli'},
+          component: () => import('@/views/diskUI/domainControl/domainControl'),
+        },
+        {
+          path: '/cloudDisk/senior',
+          name: 'senior-management',
+          meta: {title: '高级管理', iconClose: 'icon-gaojishezhi', iconOpen: 'icon-gaojishezhi'},
+          component: () => import('@/views/diskUI/senior/senior'),
+        }
+      ]
+    },
+
+    //会匹配所有路径  捕获所有路由或 404 Not found 路由
+    {
       path: '*',
       redirect: '/'
     }

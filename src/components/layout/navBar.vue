@@ -62,7 +62,7 @@
                 <use xlink:href="#icon-nv"></use>
               </svg>
             </div>
-            <div style="height: 1000px">
+            <div style="height: 1000px;background-color: #E9ECEF">
             </div>
             <div class="person-info hover-common" ref="person">
               <div class="login-type">

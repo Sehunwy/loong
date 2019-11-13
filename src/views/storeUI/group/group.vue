@@ -28,7 +28,7 @@
                 tipBackColor: '',
                 tipColor: '',
                 elementInfo: '',
-                tipTitle:'气泡旗袍',
+                tipTitle:'气泡',
                 isShowTip: false,
                 isShowTip1: false
             }

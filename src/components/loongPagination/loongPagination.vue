@@ -45,7 +45,7 @@
         data() {
             return {
                 limitsNow: [],
-                pageSizeNow: "",
+                pageSizeNow: this.pageSize,
                 pageNumNow: "",
                 totalPageNow: ""
             }
@@ -107,7 +107,9 @@
         },
         watch: {
             pageSizeNow: function (newVal,oldVal) {
-                this.$emit('pageInfo', {pageNum: this.pageNumNow,pageSize:this.pageSizeNow});
+                this.$nextTick(function () {
+                    this.$emit('pageInfo', {pageNum: 1,pageSize:this.pageSizeNow});
+                })
             }
         }
     }

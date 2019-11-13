@@ -9,7 +9,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -39,10 +38,14 @@
         },
         methods: {
             balloonPlace: function () {
-                let offsetWidth = this.elementInfo.offsetWidth;
-                let offsetHeight = this.elementInfo.offsetHeight;
-                let offsetTop = this.elementInfo.offsetTop;
-                let offsetLeft = this.elementInfo.offsetLeft;
+                let reallyElement = this.elementInfo[0];
+                if(this.elementInfo[0] == undefined) {
+                    reallyElement = this.elementInfo;
+                }
+                let offsetWidth = reallyElement.offsetWidth;
+                let offsetHeight = reallyElement.offsetHeight;
+                let offsetTop = reallyElement.offsetTop;
+                let offsetLeft = reallyElement.offsetLeft;
                 this.color = this.tipColor;
                 this.backColor = this.tipBackColor;
                 this.placement = this.tipPlacement;
@@ -114,28 +117,24 @@
   .arrow-bottom {
     position: absolute;
     border-width: 0 4px 4px;
-    /*border-color: transparent transparent #333;*/
     border-style: solid;
   }
 
   .arrow-top {
     position: absolute;
     border-width: 4px 4px 0;
-    /*border-color: #333 transparent transparent;*/
     border-style: solid;
   }
 
   .arrow-left {
     position: absolute;
     border-width: 4px 0 4px 4px;
-    /*border-color: transparent transparent transparent #333;*/
     border-style: solid;
   }
 
   .arrow-right {
     position: absolute;
     border-width: 4px 4px 4px 0;
-    /*border-color: transparent #333 transparent transparent;*/
     border-style: solid;
   }
 
